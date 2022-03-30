@@ -1,0 +1,26 @@
+<h1>Místnost č. {{ data.no }}</h1>
+<dl>
+  <dt>Číslo</dt>
+  <dd>{{ data.no }}</dd>
+  <dt>Název</dt>
+  <dd>{{ data.name }}</dd>
+  <dt>Telefon</dt>
+  <dd>{{data.phone}}</dd>
+  {{# plat.plat}}
+    <dt>Průměrný plat</dt>
+    <dd>{{plat.plat}}</dd>
+  {{/ plat.plat}}
+  <dt>Lidé</dt>
+  {{# osoby }}
+    <dd>{{surname}}</dd>
+  {{/ osoby }}
+  <dt>Klíče</dt>
+  {{#klic}}
+    <dd><a href='/clovek.php?clovek_id={{employee_id}}'> {{jmeno}} {{prijmeni}}</a></dd>
+  {{/klic}}
+
+
+
+</dl>
+
+<a href="../rooms/index.php">zpět na seznam místností</a>
