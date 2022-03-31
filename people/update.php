@@ -11,7 +11,7 @@ final class CurrentPage extends BaseDBPage {
     const RESULT_FAIL = 2;
 
     private int $state;
-    private RoomModel $room;
+    private EmployeeModel $employee;
     private int $result = 0;
 
     //když nepřišla data a není hlášení o výsledku, chci zobrazit formulář
@@ -23,7 +23,7 @@ final class CurrentPage extends BaseDBPage {
     public function __construct()
     {
         parent::__construct();
-        $this->title = "New room";
+        $this->title = "Upravit zaměstnance";
     }
 
 
@@ -40,15 +40,15 @@ final class CurrentPage extends BaseDBPage {
             //přišla data
             //načíst
 
-            $this->room = RoomModel::readPostData();
+            $this->employee = EmployeeModel::readPostData();
 
             //validovat
-            $isOk = $this->room->validate();
+            $isOk = $this->employee->validate();
 
             //když jsou validní
             if ($isOk) {
                 //uložit
-                if ($this->room->update()) {
+                if ($this->employee->update()) {
                     //přesměruj, ohlas úspěch
                     $this->redirect(self::RESULT_SUCCESS);
                 } else {
@@ -60,8 +60,8 @@ final class CurrentPage extends BaseDBPage {
             }
         } else { //vyžádán formulář, nebylo updatováno
             $this->state = self::STATE_FORM_REQUESTED;
-            $roomId = filter_input(INPUT_POST, "room_id");
-            $this->room = RoomModel::findById($roomId);
+            $employee_id = filter_input(INPUT_POST, "employee_id");
+            $this->employee = EmployeeModel::findById($employee_id);
             //neřešena chyba, pokud neexistuje v DB nebo nebylo ID vůbec posláno
         }
 
@@ -72,19 +72,19 @@ final class CurrentPage extends BaseDBPage {
     {
         if ($this->state == self::STATE_FORM_REQUESTED)
             return $this->m->render(
-                "roomForm",
+                "employeeForm",
                 [
-                    'room' => $this->room,
-                    'errors' => $this->room->getValidationErrors(),
+                    'employee' => $this->employee,
+                    'errors' => $this->employee->getValidationErrors(),
                     'action' => "update"
                 ]
             );
         elseif ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("roomSuccess", ['message' => "Aktualizace místnosti byla úspěšná"]);
+                return $this->m->render("roomSuccess", ['message' => "Aktualizace zaměstnance byla úspěšná"]);
             } else {
-                return $this->m->render("roomFail", ['message' => "Aktualizace místnosti se nezdařila"]);
+                return $this->m->render("roomFail", ['message' => "Aktualizace zaměstnance se nezdařila"]);
             }
         }
         return "";

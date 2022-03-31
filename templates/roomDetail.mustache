@@ -12,14 +12,14 @@
   {{/ plat.plat}}
   <dt>Lidé</dt>
   {{# osoby }}
-    <dd>{{surname}}</dd>
+    <dd><a href='/people/clovek.php?employee_id={{employee_id}}'>{{surname}} {{nameshort}}</a></dd>
   {{/ osoby }}
   <dt>Klíče</dt>
   {{#klic}}
-    <dd><a href='/clovek.php?clovek_id={{employee_id}}'> {{jmeno}} {{prijmeni}}</a></dd>
+    <dd><a href='/people/clovek.php?employee_id={{employee_id}}'>{{prijmeni}} {{jmeno}}</a></dd>
   {{/klic}}
 
-
+ 
 
 </dl>
 

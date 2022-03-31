@@ -1,0 +1,39 @@
+<h1>Zaměstnanec</h1>
+<form method="post">
+    <div class="mt-3">
+    <label for="name">Jméno</label>
+        <input type="text" name="name" id="name" value="{{employee.name}}" class="form-control"/>
+        {{#errors.name}}<small class="text-warning">{{errors.name}}</small>{{/errors.name}}
+    </div>
+
+    <div class="mt-3">
+    <label for="surname">Příjmení</label>
+        <input type="text" name="surname" id="surname" value="{{employee.surname}}" class="form-control"/>
+        {{#errors.surname}}<small class="text-warning">{{errors.surname}}</small>{{/errors.surname}}
+    </div>
+
+    <div class="mt-3">
+    <label for="job">Práce</label>
+        <input type="text" name="job" id="job" value="{{employee.job}}" class="form-control"/>
+        {{#errors.job}}<small class="text-warning">{{errors.job}}</small>{{/errors.job}}
+    </div>
+
+        <div class="mt-3">
+    <label for="job">Mzda</label>
+        <input type="text" name="wage" id="wage" value="{{employee.wage}}" class="form-control" type="number"/>
+        {{#errors.wage}}<small class="text-warning">{{errors.wage}}</small>{{/errors.wage}}
+    </div>
+
+        <div class="mt-3">
+    <label for="room">Místnost</label>
+        <input type="text" name="room" id="room" value="{{employee.room}}" class="form-control" type="number"/>
+        {{#errors.room}}<small class="text-warning">{{errors.room}}</small>{{/errors.room}}
+    </div>
+
+    <div class="mt-3">
+        {{#employee.employee_id}}<input type="hidden" name="employee_id" value="{{employee.employee_id}}">{{/employee.employee_id}}
+        <input type="hidden" name="action" value="{{action}}" />
+        <input type="submit" value="{{action}}" class="btn btn-primary" />
+    </div>
+
+</form>

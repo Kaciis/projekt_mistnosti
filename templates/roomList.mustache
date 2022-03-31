@@ -11,15 +11,15 @@
     <tbody>
     {{# rooms }}
         <tr>
-            <td><a href="../rooms/room.php?room_id={{ room_id }}">{{ name }}</a></td>
+            <td><a href="/rooms/room.php?room_id={{ room_id }}">{{ name }}</a></td>
             <td>{{ no }}</td>
             <td>{{ phone }}</td>
             <td>
-                <form method="post" action="./update.php">
+                <form method="post" action="/rooms/update.php">
                     <input type="hidden" name="room_id" value="{{room_id}}" />
                     <input type="submit" value="Update" class="btn btn-info"/>
                 </form>
-                <form method="post" action="./delete.php" onsubmit="return confirm('Really delete room?\nAction cannot be undone!')">
+                <form method="post" action="/rooms/delete.php" onsubmit="return confirm('Really delete room?\nAction cannot be undone!')">
                     <input type="hidden" name="room_id" value="{{room_id}}" />
                     <input type="submit" value="Delete" class="btn btn-danger"/>
                 </form>

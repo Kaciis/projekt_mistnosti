@@ -1,0 +1,20 @@
+<h1>Karta zaměstnance: {{ clovek.jmeno }} {{ clovek.prijmeni}}</h1>
+<dl>
+  <dt>Jméno</dt>
+  <dd>{{ clovek.jmeno}}</dd>
+  <dt>Příjmení</dt>
+  <dd>{{ clovek.prijmeni }}</dd>
+  <dt>Pozice</dt>
+  <dd>{{clovek.job}}</dd>
+  <dt>Mzda</dt>
+  <dd>{{clovek.wage}}</dd>
+  <dt>Mistnost</dt>
+  <dd>{{clovek.room_name}}</dd>
+  <dt>Klíče</dt>
+  {{# klice}}
+    <dd><a href="/rooms/room.php?room_id={{room_id}}">{{jmeno_klice}}</a></dd>
+  {{/ klice}}
+
+</dl>
+
+<a href="../people/index.php">zpět na seznam zaměstnanců</a>
