@@ -1,10 +1,19 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Number</th>
-        <th>Phone</th>
-        <th>Actions</th>
+        <th>Název
+            <a href="?poradi=nazev_down" {{#seradit.nazev_down}}class="sorted"{{/seradit.nazev_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=nazev_up" {{#seradit.nazev_up}}class="sorted"{{/seradit.nazev_up}}><i class='bi bi-arrow-up'></i></a>
+        </th>
+        <th>Číslo
+            <a href="?poradi=cislo_down" {{#seradit.cislo_down}}class="sorted"{{/seradit.cislo_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=cislo_up" {{#seradit.cislo_up}}class="sorted"{{/seradit.cislo_up}}><i class='bi bi-arrow-up'></i></a>
+        </th>
+        <th>Telefon
+            <a href="?poradi=telefon_down" {{#seradit.telefon_down}}class="sorted"{{/seradit.telefon_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=telefon_up" {{#seradit.telefon_up}}class="sorted"{{/seradit.telefon_up}}><i class='bi bi-arrow-up'></i></a>        
+        </th>
+        <th>Akce</th>
     </tr>
     </thead>
 
@@ -28,4 +37,4 @@
     {{/ rooms }}
     </tbody>
 </table>
-<a href="insert.php" class="btn btn-primary">New Room</a>
+<a href="/rooms/insert.php" class="btn btn-primary">Nová místnost</a>

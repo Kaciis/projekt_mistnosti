@@ -4,29 +4,39 @@ require "../includes/bootstrap.inc.php";
 final class CurrentPage extends BaseDBPage
 {
     protected RoomModel $data;
+    protected $var;
 
     public function __construct()
     {
         $roomId = filter_input(INPUT_GET, "room_id");
 
-        $this->data = RoomModel::findById($roomId);
-        $this->title = "Karta místnosti " . $this->data->no;
+        $this->title = "Karta místnosti";
         parent::__construct();
     }
     protected function body(): string
     {
         $roomId = filter_input(INPUT_GET, "room_id");
 
+
+        $var = RoomModel::findById($roomId);
+        if($var == null){
+            throw new RequestException(404);
+        }
+
+        $this->data = $var;
+        $this->title = "Karta místnosti " . $this->data->no;
+
+
         $query = "SELECT ROUND(AVG(wage),2) as plat FROM employee WHERE employee.room = ?";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$roomId]);
-        
+
         $plat = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        
-        
 
-        
+
+
+
         $osoby = $this->pdo->prepare("SELECT employee.wage,employee.surname,CONCAT(LEFT(employee.name, 1),'.') as nameshort,employee_id FROM employee WHERE employee.room = ?");
         $osoby->execute([$roomId]);
 
@@ -37,10 +47,15 @@ final class CurrentPage extends BaseDBPage
         INNER JOIN `employee` as e ON k.employee = e.employee_id 
         WHERE r.room_id = ?; ");
         $klice->execute([$roomId]);
-        
+
         $this->title = "Karta místnosti " . $this->data->no;
 
-        return $this->m->render("roomDetail", ["osoby" => $osoby, "klic" => $klice,"data" => $this->data,"plat" => $plat]);
+
+        // if ($this->data->no == null) {
+        //     throw new RequestException(404);
+        // } else {
+            return $this->m->render("roomDetail", ["osoby" => $osoby, "klic" => $klice, "data" => $this->data, "plat" => $plat]);
+        // }
     }
 }
 

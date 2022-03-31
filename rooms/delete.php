@@ -23,7 +23,7 @@ final class CurrentPage extends BaseDBPage {
     public function __construct()
     {
         parent::__construct();
-        $this->title = "Room delete";
+        $this->title = "Smazání místnosti";
     }
 
 
@@ -65,9 +65,9 @@ final class CurrentPage extends BaseDBPage {
         if ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("roomSuccess", ['message' => "Room deleted successfully."]);
+                return $this->m->render("roomSuccess", ['message' => "Smazání místnosti bylo úspěšné"]);
             } else {
-                return $this->m->render("roomFail", ['message' => "Room deletion failed."]);
+                return $this->m->render("roomFail", ['message' => "Smazání místnosti se nezdařilo"]);
             }
         }
         return "";

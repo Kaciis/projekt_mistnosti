@@ -1,10 +1,22 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Jméno</th>
-        <th>Místnost</th>
-        <th>Telefon</th>
-        <th>Pozice</th>
+        <th>Jméno
+            <a href="?poradi=prijmeni_down" {{#seradit.prijmeni_down}}class="sorted"{{/seradit.prijmeni_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=prijmeni_up" {{#seradit.prijmeni_up}}class="sorted"{{/seradit.prijmeni_up}}><i class='bi bi-arrow-up'></i></a>
+        </th>
+        <th>Místnost
+            <a href="?poradi=nazev_down" {{#seradit.nazev_down}}class="sorted"{{/seradit.nazev_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=nazev_up" {{#seradit.nazev_up}}class="sorted"{{/seradit.nazev_up}}><i class='bi bi-arrow-up'></i></a>
+        </th>
+        <th>Telefon
+            <a href="?poradi=telefon_down" {{#seradit.telefon_down}}class="sorted"{{/seradit.telefon_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=telefon_up" {{#seradit.telefon_up}}class="sorted"{{/seradit.telefon_up}}><i class='bi bi-arrow-up'></i></a>        
+        </th>
+        <th>Pozice
+            <a href="?poradi=poradi_down" {{#seradit.poradi_down}}class="sorted"{{/seradit.poradi_down}}><i class='bi bi-arrow-down'></i></a>
+            <a href="?poradi=poradi_up" {{#seradit.poradi_up}}class="sorted"{{/seradit.poradi_up}}><i class='bi bi-arrow-up'></i></a>
+</th>
         <th>Akce</th>
     </tr>
     </thead>
@@ -30,4 +42,4 @@
     {{/ employees }}
     </tbody>
 </table>
-{{! <a href="insert.php" class="btn btn-primary">New Room</a> }}
+<a href="/people/insert.php" class="btn btn-primary">Nový zaměstnanec</a>

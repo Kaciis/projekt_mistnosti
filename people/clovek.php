@@ -4,6 +4,16 @@ require "../includes/bootstrap.inc.php";
 final class CurrentPage extends BaseDBPage {
     protected string $title = "Výpis zaměstnanců";
 
+
+    public function __construct()
+    {
+        $roomId = filter_input(INPUT_GET, "employee_id");
+
+        $this->data = EmployeeModel::findById($roomId);
+        $this->title = "Karta zaměstnance " . $this->data->surname;
+        parent::__construct();
+    }
+
     protected function body(): string
     {
 
@@ -20,8 +30,11 @@ final class CurrentPage extends BaseDBPage {
         $stmt->execute([$clovekID]);
         $row = $stmt->fetch();
         
-
-        return $this->m->render("employeeDetail", ["clovek" => $row, "klice" => $stmt]);
+        if($row['surname']==null){
+            throw new RequestException(404);
+        }else{
+            return $this->m->render("employeeDetail", ["clovek" => $row, "klice" => $stmt]);
+        }
     }
 }
 
