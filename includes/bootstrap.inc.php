@@ -4,6 +4,10 @@ ini_set('display_startup_errors', '1');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+session_start([
+    'cookie_lifetime' => 86400,
+]);
+
 mb_internal_encoding("UTF-8");
 
 require_once __DIR__ . "/../vendor/autoload.php";

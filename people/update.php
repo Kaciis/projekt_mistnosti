@@ -71,7 +71,7 @@ final class CurrentPage extends BaseDBPage {
     protected function body(): string
     {
         if ($this->state == self::STATE_FORM_REQUESTED)
-            return $this->m->render(
+        return $this->content(
                 "employeeForm",
                 [
                     'employee' => $this->employee,
@@ -82,9 +82,9 @@ final class CurrentPage extends BaseDBPage {
         elseif ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("roomSuccess", ['message' => "Aktualizace zaměstnance byla úspěšná"]);
+                return $this->content("employeeSuccess", ['message' => "Aktualizace zaměstnance byla úspěšná"]);
             } else {
-                return $this->m->render("roomFail", ['message' => "Aktualizace zaměstnance se nezdařila"]);
+                return $this->content("roomFail", ['message' => "Aktualizace zaměstnance se nezdařila"]);
             }
         }
         return "";

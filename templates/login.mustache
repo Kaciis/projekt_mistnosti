@@ -1,0 +1,13 @@
+<div class="container">
+    <h1>Přihlásit se</h1>
+    {{#error}}<small class="text-danger">{{error}}</small>{{/error}}
+    <form method="post">
+      <label for="name">Jméno:</label><br>
+        <input type="text" name="name" id="name" value="{{login.name}}" required class="form-control"><br><br>
+        <label for="password">Heslo:</label><br>
+        <input type="password" id="password" name="password" class="form-control"><br><br>
+      <input class="btn btn-primary" type="submit" value="Přihlásit se">
+
+    </form>
+
+</div>

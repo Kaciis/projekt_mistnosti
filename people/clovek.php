@@ -29,12 +29,15 @@ final class CurrentPage extends BaseDBPage {
 
         $stmt->execute([$clovekID]);
         $row = $stmt->fetch();
-        
-        if($row['surname']==null){
+        // dump($row);
+
+
+        if($row->prijmeni == null){
             throw new RequestException(404);
         }else{
-            return $this->m->render("employeeDetail", ["clovek" => $row, "klice" => $stmt]);
+            return $this->content("employeeDetail", ["clovek" => $row, "klice" => $stmt]);
         }
+        return "";
     }
 }
 

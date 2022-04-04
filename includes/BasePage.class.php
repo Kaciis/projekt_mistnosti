@@ -5,10 +5,25 @@ abstract class BasePage
     protected MustacheRunner $m;
     protected string $title;
     protected array $extraHeaders = [];
+    protected bool $loggedIn = false;
 
     public function __construct()
     {
         $this->m = new MustacheRunner();
+        if(!isset($_SESSION["loggedIn"])){
+            $_SESSION["loggedIn"] = false;
+        }
+        if($_SESSION["loggedIn"] == true){
+            $this->loggedIn = true;
+        }
+    }
+
+    public function content($templateName, $context = []){
+        if($this->loggedIn){
+            return $this->m->render($templateName,$context);
+        }else{
+            return $this->m->render("needToLogin",[]);
+        }
     }
 
     public function render() : void {
@@ -35,7 +50,11 @@ abstract class BasePage
     protected function setUp() : void {}
 
     protected function header() : string {
-        return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders]);
+        if($this->loggedIn){
+            return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders, "loggedIn" => $_SESSION['loggedIn']]);
+        }else{
+            return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders]);
+        }
     }
 
     abstract protected function body() : string;

@@ -17,7 +17,9 @@
             <a href="?poradi=poradi_down" {{#seradit.poradi_down}}class="sorted"{{/seradit.poradi_down}}><i class='bi bi-arrow-down'></i></a>
             <a href="?poradi=poradi_up" {{#seradit.poradi_up}}class="sorted"{{/seradit.poradi_up}}><i class='bi bi-arrow-up'></i></a>
 </th>
+{{#admin}}
         <th>Akce</th>
+        {{/admin}}
     </tr>
     </thead>
 
@@ -28,6 +30,7 @@
             <td>{{ room_name }}</td>
             <td>{{ phone }}</td>
             <td>{{ job}}</td>
+            {{#admin}}
             <td>
                 <form method="post" action="/people/update.php">
                     <input type="hidden" name="employee_id" value="{{e_id}}" />
@@ -38,8 +41,11 @@
                     <input type="submit" value="Delete" class="btn btn-danger"/>
                 </form>
             </td>
+            {{/admin}}
         </tr>
     {{/ employees }}
     </tbody>
 </table>
+{{#admin}}
 <a href="/people/insert.php" class="btn btn-primary">Nový zaměstnanec</a>
+{{/admin}}

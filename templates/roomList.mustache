@@ -13,7 +13,9 @@
             <a href="?poradi=telefon_down" {{#seradit.telefon_down}}class="sorted"{{/seradit.telefon_down}}><i class='bi bi-arrow-down'></i></a>
             <a href="?poradi=telefon_up" {{#seradit.telefon_up}}class="sorted"{{/seradit.telefon_up}}><i class='bi bi-arrow-up'></i></a>        
         </th>
+        {{#admin}}
         <th>Akce</th>
+        {{/admin}}
     </tr>
     </thead>
 
@@ -23,6 +25,7 @@
             <td><a href="/rooms/room.php?room_id={{ room_id }}">{{ name }}</a></td>
             <td>{{ no }}</td>
             <td>{{ phone }}</td>
+            {{#admin}}
             <td>
                 <form method="post" action="/rooms/update.php">
                     <input type="hidden" name="room_id" value="{{room_id}}" />
@@ -33,8 +36,11 @@
                     <input type="submit" value="Delete" class="btn btn-danger"/>
                 </form>
             </td>
+            {{/admin}}
         </tr>
     {{/ rooms }}
     </tbody>
 </table>
+{{#admin}}
 <a href="/rooms/insert.php" class="btn btn-primary">Nová místnost</a>
+{{/admin}}

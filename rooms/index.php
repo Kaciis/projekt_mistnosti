@@ -6,6 +6,11 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
+        if($this->loggedIn == false){
+            return $this->m->render("needToLogin",[]);
+        }
+
+        // return $this->m->render("needToLogin",[]);
 
         $orderBy = "name ASC";
 
@@ -55,6 +60,7 @@ final class CurrentPage extends BaseDBPage {
 
         $seradit[$poradi] = true;
 
+        // return $this->m->render();
         return $this->m->render("roomList", ["rooms" => $stmt, "seradit" => $seradit]);
     }
 }

@@ -29,7 +29,12 @@ final class CurrentPage extends BaseDBPage {
 
     protected function setUp(): void
     {
+        if($this->loggedIn == false){
+            throw new RequestException(403);
+        }
         parent::setUp();
+
+
 
         $this->state = $this->getState();
 
@@ -69,7 +74,7 @@ final class CurrentPage extends BaseDBPage {
     protected function body(): string
     {
         if ($this->state == self::STATE_FORM_REQUESTED)
-            return $this->m->render(
+        return $this->content(
                 "roomForm",
                 [
                     'room' => $this->room,
@@ -80,9 +85,9 @@ final class CurrentPage extends BaseDBPage {
         elseif ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("roomSuccess", ['message' => "New room created successfully."]);
+                return $this->content("roomSuccess", ['message' => "New room created successfully."]);
             } else {
-                return $this->m->render("roomFail", ['message' => "Room creation failed."]);
+                return $this->content("roomFail", ['message' => "Room creation failed."]);
             }
         }
         return "";

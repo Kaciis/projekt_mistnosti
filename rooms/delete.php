@@ -29,6 +29,10 @@ final class CurrentPage extends BaseDBPage {
 
     protected function setUp(): void
     {
+        if($this->loggedIn == false){
+            throw new RequestException(403);
+        }
+        
         parent::setUp();
 
         $this->state = $this->getState();
@@ -65,9 +69,9 @@ final class CurrentPage extends BaseDBPage {
         if ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->m->render("roomSuccess", ['message' => "Smazání místnosti bylo úspěšné"]);
+                return $this->content("roomSuccess", ['message' => "Smazání místnosti bylo úspěšné"]);
             } else {
-                return $this->m->render("roomFail", ['message' => "Smazání místnosti se nezdařilo"]);
+                return $this->content("roomFail", ['message' => "Smazání místnosti se nezdařilo"]);
             }
         }
         return "";

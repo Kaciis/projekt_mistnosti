@@ -10,20 +10,26 @@ final class CurrentPage extends BaseDBPage
     {
         $roomId = filter_input(INPUT_GET, "room_id");
 
-        $this->title = "Karta místnosti";
+        $this->var = RoomModel::findById($roomId);
+        
+        $this->title = "Karta místnosti " . $this->var->no;
         parent::__construct();
     }
     protected function body(): string
     {
+        if($this->loggedIn == false){
+            throw new RequestException(403);
+        }
+        
         $roomId = filter_input(INPUT_GET, "room_id");
 
 
-        $var = RoomModel::findById($roomId);
-        if($var == null){
+        // $var = RoomModel::findById($roomId);
+        if($this->var == null){
             throw new RequestException(404);
         }
 
-        $this->data = $var;
+        $this->data = $this->var;
         $this->title = "Karta místnosti " . $this->data->no;
 
 
@@ -54,7 +60,7 @@ final class CurrentPage extends BaseDBPage
         // if ($this->data->no == null) {
         //     throw new RequestException(404);
         // } else {
-            return $this->m->render("roomDetail", ["osoby" => $osoby, "klic" => $klice, "data" => $this->data, "plat" => $plat]);
+            return $this->content("roomDetail", ["osoby" => $osoby, "klic" => $klice, "data" => $this->data, "plat" => $plat]);
         // }
     }
 }

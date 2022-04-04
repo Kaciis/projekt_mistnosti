@@ -1,12 +1,17 @@
 <?php
+
 require "./includes/bootstrap.inc.php";
 
-final class CurrentPage extends BaseDBPage {
+final class CurrentPage extends BaseDBPage
+{
     protected string $title = "Prohlížeč databáze";
 
     protected function body(): string
     {
-        return $this->m->render("index",[]);
+        // if (isset($_SESSION["isAdmin"])) {
+        //     echo $_SESSION["isAdmin"];
+        // }
+        return $this->content("index", []);
     }
 }
 
