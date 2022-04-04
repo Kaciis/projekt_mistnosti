@@ -73,16 +73,21 @@ final class CurrentPage extends BaseDBPage {
 
     protected function body(): string
     {
-        if ($this->state == self::STATE_FORM_REQUESTED)
-        return $this->content(
+        if ($this->state == self::STATE_FORM_REQUESTED){
+            $rooms = $this->pdo->prepare("SELECT * FROM room;");
+            $rooms->execute([]);
+
+            return $this->content(
                 "employeeForm",
                 [
-                    "keys" => $this->employee->getKeys(),
+                    "rooms" => $rooms,
                     'employee' => $this->employee,
                     'errors' => $this->employee->getValidationErrors(),
                     'action' => "create"
                 ]
             );
+        }
+
         elseif ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {

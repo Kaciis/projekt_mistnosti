@@ -26,10 +26,15 @@
 
         <div class="mt-3">
     <label for="room">Místnost</label>
-        <input type="text" name="room" id="room" value="{{employee.room}}" class="form-control" type="number"/>
+    <select name="room" id="room">
+        {{#rooms}}            
+            <option value="{{room_id}}">{{name}}</option>
+            {{/rooms}}
+        </select>
+        
         {{#errors.room}}<small class="text-warning">{{errors.room}}</small>{{/errors.room}}
     </div>
-
+    <label>Klice</label>
     {{#keys}}
     <div>
     <label for="{{no}}">{{name}}</label>

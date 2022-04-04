@@ -52,21 +52,21 @@ final class EmployeeModel
         }
         if (!$this->surname) {
             $isOk = false;
-            $this->validationErrors['surname'] = "Surname cannot be empty";
+            $this->validationErrors['surname'] = "Must be a number";
         }
         if (!$this->job) {
             $isOk = false;
-            $this->validationErrors['job'] = "Surname cannot be empty";
+            $this->validationErrors['job'] = "job cannot be empty";
             $this->job = null;
         }
         if (!$this->wage) {
             $isOk = false;
-            $this->validationErrors['wage'] = "Surname cannot be empty";
+            $this->validationErrors['wage'] = "Must be a number";
             $this->wage = null;
         }
         if (!$this->room) {
             $isOk = false;
-            $this->validationErrors['room'] = "Surname cannot be empty";
+            $this->validationErrors['room'] = "bad room";
             $this->room = null;
         }
 
@@ -135,16 +135,30 @@ final class EmployeeModel
 
     public static function deleteById(int $employee_id) : bool {
 
-        $query = "DELETE FROM room WHERE employee_id=:employee";
+        $query2 = "DELETE FROM employee WHERE employee_id=:employee";
+
+        $stmt2 = DB::getConnection()->prepare($query2);
+        $stmt2->bindParam(':employee', $employee_id);
+
+
+        $query = "DELETE FROM `key` WHERE employee=:employee";
 
         $stmt = DB::getConnection()->prepare($query);
-        $stmt->bindParam(':employee', $employee_id);
 
+        $stmt->bindParam(':employee', $employee_id);
+    
+
+        
+
+        // echo($stmt->fullQuery);
+        $stmt->execute();
+        // $stmt2->execute();
+        // return true;
 
 
         // echo($stmt->fullQuery);
 
-        return $stmt->execute();
+        return $stmt2->execute();
         // return true;
     }
 
