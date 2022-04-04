@@ -28,7 +28,7 @@ abstract class BasePage
 
     public function render() : void {
 
-        try {
+        // try {
             $this->setUp();
 
             $html = $this->header();
@@ -37,13 +37,13 @@ abstract class BasePage
             echo $html;
 
             $this->wrapUp();
-        } catch (RequestException $e) {
-            $errPage = new ErrorPage($e->getStatusCode());
-            $errPage->render();
-        } catch (Exception $e) {
-            $errPage = new ErrorPage();
-            $errPage->render();
-        }
+        // } catch (RequestException $e) {
+        //     $errPage = new ErrorPage($e->getStatusCode());
+        //     $errPage->render();
+        // } catch (Exception $e) {
+        //     $errPage = new ErrorPage();
+        //     $errPage->render();
+        // }
         exit;
     }
 
@@ -51,7 +51,7 @@ abstract class BasePage
 
     protected function header() : string {
         if($this->loggedIn){
-            return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders, "loggedIn" => $_SESSION['loggedIn']]);
+            return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders, "loggedIn" => $_SESSION['username']]);
         }else{
             return $this->m->render("head", ["title" => $this->title, "extraHeaders" => $this->extraHeaders]);
         }

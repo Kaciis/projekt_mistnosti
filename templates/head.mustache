@@ -25,28 +25,30 @@ padding-left:1.5em;
 </head>
 {{! <body> }}
 <body class="container">
-
+    {{#loggedIn}}
 <div class="nav justify-content-end mt-3">
     <div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    {{loggedIn}}
+
+        {{loggedIn}}
+    
+
   </button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="/zmenaHesla.php">Změnit heslo</a></li>
+    <li><a class="dropdown-item" href="/passchange.php">Změnit heslo</a></li>
     <li><a class="dropdown-item" href="/logout.php">Odhlášení</a></li>
   </ul>
     </div>
 </div>
-<div class="d-flex flex-row-reverse ">
 
 
 
-    {{#loggedIn}}
-        <a class="btn btn-primary dropdown show " href="/logout.php">Odhlásit se</a>
-    {{/loggedIn}}
+
+{{/loggedIn}}
     {{^loggedIn}}
+    <div class="d-flex flex-row-reverse ">
         <a href="/login.php" class="btn btn-primary dropdown show">Přihlásit se</a>
-    {{/loggedIn}}
-
 
     </div>
+    {{/loggedIn}}
+

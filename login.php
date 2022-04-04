@@ -27,6 +27,8 @@ final class CurrentPage extends BaseDBPage {
         return $this->m->render("login",[]);
     }
     public function checkLogin($userName, $pass) : bool{
+
+
         $stmt = $this->pdo->prepare("SELECT * FROM employee WHERE login = :login");
         $stmt->execute([$userName]);
         $row = $stmt->fetch();
