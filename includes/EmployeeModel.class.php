@@ -2,7 +2,7 @@
 
 final class EmployeeModel
 {
-    public int $employee_id;
+    public ?int $employee_id;
     public string $name;
     public string $surname;
     public ?string $job;
@@ -20,7 +20,7 @@ final class EmployeeModel
     {
         $id = $employeeData['employee_id'] ?? null;
 
-        if($id== null) throw new Error("jaj");
+        // if($id== null) throw new Error("jaj");
 
 
         if (is_string($id))
@@ -73,21 +73,24 @@ final class EmployeeModel
         return $isOk;
     }
     // TODO : insert
-    // public function insert() : bool
-    // {
-    //     $query = "INSERT INTO employee (name, surname, job, wage, room) VALUES (:name, :surname, :job, :wage, :room)";
+    public function insert() : bool
+    {
+        $query = "INSERT INTO employee (name, surname, job, wage, room) VALUES (:name, :surname, :job, :wage, :room)";
 
-    //     $stmt = DB::getConnection()->prepare($query);
-    //     $stmt->bindParam(':name', $this->name);
-    //     $stmt->bindParam(':no', $this->no);
-    //     $stmt->bindParam(':phone', $this->phone);
+        $stmt = DB::getConnection()->prepare($query);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':surname', $this->surname);
+        $stmt->bindParam(':job', $this->job);
+        $stmt->bindParam(':wage', $this->wage);
+        $stmt->bindParam(':room', $this->room);
 
-    //     if (!$stmt->execute())
-    //         return false;
 
-    //     $this->employee_id = DB::getConnection()->lastInsertId();
-    //     return true;
-    // }
+        if (!$stmt->execute())
+            return false;
+
+        $this->employee_id = DB::getConnection()->lastInsertId();
+        return true;
+    }
     // TODO : update
     public function update(): bool
     {
@@ -106,6 +109,20 @@ final class EmployeeModel
         $stmt->bindParam(':room', $this->room);
         // print($query);
         return $stmt->execute();
+    }
+
+    public function getKeys()
+    {
+        
+        $query = "SELECT room_id, no, name, 1 as has FROM room where room_id in(SELECT room from `key` where employee = :employee1) UNION SELECT room_id, no, name, null FROM room where room_id not in(SELECT room from `key` where employee = :employee)";
+
+        $stmt = DB::getConnection()->prepare($query);
+        $stmt->bindParam(':employee1', $this->employee_id);
+        $stmt->bindParam(':employee', $this->employee_id);
+
+
+        $stmt->execute();
+        return $stmt;
     }
 
     // TODO : delete this

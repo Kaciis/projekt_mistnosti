@@ -30,6 +30,13 @@
         {{#errors.room}}<small class="text-warning">{{errors.room}}</small>{{/errors.room}}
     </div>
 
+    {{#keys}}
+    <div>
+    <label for="{{no}}">{{name}}</label>
+    <input type="checkbox" value="{{room_id}}" name="keys[{{no}}]" {{#has}}checked{{/has}} id="{{no}}">
+    </div>
+    {{/keys}}
+
     <div class="mt-3">
         {{#employee.employee_id}}<input type="hidden" name="employee_id" value="{{employee.employee_id}}">{{/employee.employee_id}}
         

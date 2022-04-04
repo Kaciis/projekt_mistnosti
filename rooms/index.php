@@ -61,7 +61,12 @@ final class CurrentPage extends BaseDBPage {
         $seradit[$poradi] = true;
 
         // return $this->m->render();
-        return $this->m->render("roomList", ["rooms" => $stmt, "seradit" => $seradit]);
+        if ($_SESSION["isAdmin"] == true) {
+        return $this->m->render("roomList", ["rooms" => $stmt, "seradit" => $seradit, "admin" => 1]);
+        }else{
+            return $this->m->render("roomList", ["rooms" => $stmt, "seradit" => $seradit]);
+
+        }
     }
 }
 

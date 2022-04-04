@@ -23,13 +23,18 @@ final class CurrentPage extends BaseDBPage {
     public function __construct()
     {
         parent::__construct();
-        $this->title = "Upravit zaměstnance";
+        $this->title = "Nový zaměstnanec";
     }
 
 
     protected function setUp(): void
     {
+        if($this->loggedIn == false){
+            throw new RequestException(403);
+        }
         parent::setUp();
+
+
 
         $this->state = $this->getState();
 
@@ -41,38 +46,14 @@ final class CurrentPage extends BaseDBPage {
             //načíst
 
             $this->employee = EmployeeModel::readPostData();
-            
+
             //validovat
             $isOk = $this->employee->validate();
 
             //když jsou validní
             if ($isOk) {
                 //uložit
-                // dump($_POST['keys']);
-                // $new = filter_input(INPUT_POST, 'keys');
-                // dump($new);
-                if ($this->employee->update()) {
-                    $new = ($_POST['keys']);
-                    foreach ($new as $item) {
-                        if (is_string($item))
-                        $item = filter_var($item, FILTER_VALIDATE_INT);
-                        // dump($item);
-                    }
-                    $stmt = $this->pdo->prepare("DELETE FROM `key` where employee = :employee");
-                    $stmt->execute([$this->employee->employee_id]);
-
-                    $insert = "INSERT INTO `key` (employee, room) VALUES ";
-
-                    foreach ($new as $item) {
-                        $insert .= "(" . $this->employee->employee_id . ", " . $item . "),";
-                    }
-                    $insert = substr($insert, 0, -1);
-                    // dump($insert);
-                    $stmt = $this->pdo->prepare($insert);
-                    $stmt->execute();
-
-
-                    
+                if ($this->employee->insert()) {
                     //přesměruj, ohlas úspěch
                     $this->redirect(self::RESULT_SUCCESS);
                 } else {
@@ -82,11 +63,9 @@ final class CurrentPage extends BaseDBPage {
             } else {
                 $this->state = self::STATE_FORM_REQUESTED;
             }
-        } else { //vyžádán formulář, nebylo updatováno
+        } else {
             $this->state = self::STATE_FORM_REQUESTED;
-            $employee_id = filter_input(INPUT_POST, "employee_id");
-            $this->employee = EmployeeModel::findById($employee_id);
-            //neřešena chyba, pokud neexistuje v DB nebo nebylo ID vůbec posláno
+            $this->employee = new EmployeeModel();
         }
 
     }
@@ -101,15 +80,15 @@ final class CurrentPage extends BaseDBPage {
                     "keys" => $this->employee->getKeys(),
                     'employee' => $this->employee,
                     'errors' => $this->employee->getValidationErrors(),
-                    'action' => "update"
+                    'action' => "create"
                 ]
             );
         elseif ($this->state == self::STATE_PROCESSED){
             //vypiš výsledek zpracování
             if ($this->result == self::RESULT_SUCCESS) {
-                return $this->content("employeeSuccess", ['message' => "Aktualizace zaměstnance byla úspěšná"]);
+                return $this->content("employeeSuccess", ['message' => "Nový zaměstnanec byl vytvořen úspěšně."]);
             } else {
-                return $this->content("employeeFail", ['message' => "Aktualizace zaměstnance se nezdařila"]);
+                return $this->content("employeeFail", ['message' => "Vytvoření nového zaměstnance selhalo."]);
             }
         }
         return "";
@@ -130,7 +109,7 @@ final class CurrentPage extends BaseDBPage {
 
         //nebo když mám post -> zvaliduju a buď uložím nebo form
         $action = filter_input(INPUT_POST, 'action');
-        if ($action == "update"){
+        if ($action == "create"){
             return self::STATE_FORM_SENT;
         }
         //jinak chci form

@@ -1,5 +1,7 @@
 <?php
 
+use Tracy\Dumper;
+
 final class RoomModel
 {
     public ?int $room_id;
@@ -80,17 +82,32 @@ final class RoomModel
     }
 
     public static function deleteById(int $room_id) : bool {
-
-        $query = "DELETE FROM room WHERE room_id=:roomId";
-
-        $stmt = DB::getConnection()->prepare($query);
-        $stmt->bindParam(':roomId', $room_id);
-
+        $check = "SELECT room FROM employee WHERE room =:roomId";
+        $stmtCheck = DB::getConnection()->prepare($check);
+        $stmtCheck->bindParam(':roomId', $room_id);
+        $stmtCheck->execute();
+        // dump($stmtCheck);
+        if($stmtCheck->rowCount() == 0 ){
+            $query = "DELETE FROM `key` WHERE room=:roomId";
+            $query2 = "DELETE FROM room WHERE room_id=:roomId";
+    
+            $stmt = DB::getConnection()->prepare($query);
+            $stmt2 = DB::getConnection()->prepare($query2);
+    
+            $stmt->bindParam(':roomId', $room_id);
         
+            $stmt2->bindParam(':roomId', $room_id);
+    
+            
+    
+            // echo($stmt->fullQuery);
+            $stmt->execute();
+            $stmt2->execute();
+            return true;
+        }
 
-        // echo($stmt->fullQuery);
 
-        return $stmt->execute();
+        return false;
         // return true;
     }
 
