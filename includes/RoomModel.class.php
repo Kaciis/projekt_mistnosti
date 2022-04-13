@@ -82,12 +82,7 @@ final class RoomModel
     }
 
     public static function deleteById(int $room_id) : bool {
-        $check = "SELECT room FROM employee WHERE room =:roomId";
-        $stmtCheck = DB::getConnection()->prepare($check);
-        $stmtCheck->bindParam(':roomId', $room_id);
-        $stmtCheck->execute();
-        // dump($stmtCheck);
-        if($stmtCheck->rowCount() == 0 ){
+
             $query = "DELETE FROM `key` WHERE room=:roomId";
             $query2 = "DELETE FROM room WHERE room_id=:roomId";
     
@@ -102,12 +97,8 @@ final class RoomModel
     
             // echo($stmt->fullQuery);
             $stmt->execute();
-            $stmt2->execute();
-            return true;
-        }
-
-
-        return false;
+            
+            return $stmt2->execute();
         // return true;
     }
 

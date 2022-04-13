@@ -52,16 +52,16 @@ final class EmployeeModel
         }
         if (!$this->surname) {
             $isOk = false;
-            $this->validationErrors['surname'] = "Must be a number";
+            $this->validationErrors['surname'] = "Surname cannost be empty";
         }
         if (!$this->job) {
             $isOk = false;
             $this->validationErrors['job'] = "job cannot be empty";
             $this->job = null;
         }
-        if (!$this->wage) {
+        if (!$this->wage || $this->wage <0 ) {
             $isOk = false;
-            $this->validationErrors['wage'] = "Must be a number";
+            $this->validationErrors['wage'] = "Must be a number bigger than 0";
             $this->wage = null;
         }
         if (!$this->room) {
@@ -75,7 +75,7 @@ final class EmployeeModel
     // TODO : insert
     public function insert() : bool
     {
-        $query = "INSERT INTO employee (name, surname, job, wage, room) VALUES (:name, :surname, :job, :wage, :room)";
+        $query = "INSERT INTO employee (name, surname, job, wage, room, admin) VALUES (:name, :surname, :job, :wage, :room, false)";
 
         $stmt = DB::getConnection()->prepare($query);
         $stmt->bindParam(':name', $this->name);
@@ -84,11 +84,18 @@ final class EmployeeModel
         $stmt->bindParam(':wage', $this->wage);
         $stmt->bindParam(':room', $this->room);
 
-
+        $query2 = "INSERT INTO `key` (employee, room) VALUES (:employee, :room)";
         if (!$stmt->execute())
             return false;
 
         $this->employee_id = DB::getConnection()->lastInsertId();
+
+        // dump($this);
+        $stmt2 = DB::getConnection()->prepare($query2);
+        $stmt2->bindParam(':employee', $this->employee_id);
+        $stmt2->bindParam(':room', $this->room);
+        $stmt2->execute();
+
         return true;
     }
     // TODO : update

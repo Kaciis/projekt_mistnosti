@@ -27,6 +27,8 @@ padding-left:1.5em;
 <body class="container">
     {{#loggedIn}}
 <div class="nav justify-content-end mt-3">
+<a href="/index.php" class="btn btn-primary">Menu</a>
+
     <div class="dropdown">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
@@ -47,6 +49,8 @@ padding-left:1.5em;
 {{/loggedIn}}
     {{^loggedIn}}
     <div class="d-flex flex-row-reverse ">
+    <a href="/index.php" class="btn btn-primary">Menu</a>
+
         <a href="/login.php" class="btn btn-primary dropdown show">Přihlásit se</a>
 
     </div>

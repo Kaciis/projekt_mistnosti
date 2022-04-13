@@ -6,6 +6,8 @@ abstract class BasePage
     protected string $title;
     protected array $extraHeaders = [];
     protected bool $loggedIn = false;
+    protected bool $isAdmin = false;
+
 
     public function __construct()
     {
@@ -15,6 +17,13 @@ abstract class BasePage
         }
         if($_SESSION["loggedIn"] == true){
             $this->loggedIn = true;
+        }
+
+        if(!isset($_SESSION["isAdmin"])){
+            $_SESSION["isAdmin"] = false;
+        }
+        if($_SESSION["isAdmin"] == true){
+            $this->isAdmin = true;
         }
     }
 
@@ -64,4 +73,5 @@ abstract class BasePage
     }
 
     protected function wrapUp() : void {}
+
 }

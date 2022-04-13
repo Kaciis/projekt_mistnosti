@@ -29,7 +29,7 @@ final class CurrentPage extends BaseDBPage {
 
     protected function setUp(): void
     {
-        if($this->loggedIn == false){
+        if ($this->loggedIn == false || $this->isAdmin == false) {
             throw new RequestException(403);
         }
         parent::setUp();
@@ -46,9 +46,13 @@ final class CurrentPage extends BaseDBPage {
             //načíst
 
             $this->employee = EmployeeModel::readPostData();
+            
+// dump($this);
 
             //validovat
             $isOk = $this->employee->validate();
+
+            
 
             //když jsou validní
             if ($isOk) {
